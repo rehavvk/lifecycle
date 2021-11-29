@@ -1,0 +1,15 @@
+{
+    "name": "Rehawk.Lifecycle",
+    "references": [
+        "GUID:e7504ab3bff94c74295641ef92b7c08f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
