@@ -28,6 +28,16 @@ namespace Rehawk.Lifecycle
             SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void OnSubsystemRegistration()
+        {
+            multiSceneRegister.Clear();
+            scenePoller.Clear();
+            
+            multiScenePollerObj = null;
+            currentScene = new Scene();
+        }
+            
         private static void OnActiveSceneChanged(Scene previous, Scene current)
         {
             currentScene = current;
