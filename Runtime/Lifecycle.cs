@@ -11,33 +11,31 @@ namespace Rehawk.Lifecycle
         private static readonly PollerRegister multiSceneRegister = new PollerRegister();
         private static readonly Dictionary<Scene, SceneData> scenePoller = new Dictionary<Scene, SceneData>();
         
+        private static readonly List<Scene> tempSceneList = new List<Scene>();
+
         private static GameObject multiScenePollerObj;
         private static Scene currentScene;
         
-        static Lifecycle()
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void OnSubsystemRegistration()
         {
+            ResetGlobal();
+            ResetScenes();
+            
+            tempSceneList.Clear();
+            
             // in case unity has hot-reloaded
             if (Application.isEditor)
             {
                 multiScenePollerObj = GameObject.Find(MULTISCENE_GAME_OBJECT_NAME);
             }
-
+            
             currentScene = SceneManager.GetActiveScene();
             SceneManager.activeSceneChanged += OnActiveSceneChanged;
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void OnSubsystemRegistration()
-        {
-            multiSceneRegister.Clear();
-            scenePoller.Clear();
-            
-            multiScenePollerObj = null;
-            currentScene = new Scene();
-        }
-            
         private static void OnActiveSceneChanged(Scene previous, Scene current)
         {
             currentScene = current;
@@ -77,6 +75,22 @@ namespace Rehawk.Lifecycle
             scenePoller.Remove(scene);
         }
         
+        /// <summary>
+        ///     Clears all scene specific resolvers for all scenes.
+        /// </summary>
+        public static void ResetScenes()
+        {
+            tempSceneList.AddRange(scenePoller.Keys);
+
+            for (var i = 0; i < tempSceneList.Count; i++)
+            {
+                var scene = tempSceneList[i];
+                ResetScene(scene);
+            }
+
+            tempSceneList.Clear();
+        }
+
         private static void CreateGlobalPoller()
         {
             if (multiScenePollerObj != null)
