@@ -43,14 +43,14 @@ namespace Rehawk.Lifecycle
             } 
         }
 
-        private void OnDestroy()
+        private void OnApplicationQuit()
         {
             foreach (IDisposable disposable in register.Disposables)
             {
                 disposable.Dispose();
             }  
         }
-        
+
         private void HandleInitializables()
         {
             while (register.TryGetNextInitializable(out IInitializable initializable))
