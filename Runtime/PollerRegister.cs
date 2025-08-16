@@ -11,27 +11,22 @@ namespace Rehawk.Lifecycle
         private readonly List<ILateTickable> lateTickables = new List<ILateTickable>();
         private readonly List<IDisposable> disposables = new List<IDisposable>();
 
-        public IEnumerable<IInitializable> Initializables
-        {
-            get { return initializables; }
-        }
-
-        public IEnumerable<ITickable> Tickables
+        public IReadOnlyList<ITickable> Tickables
         {
             get { return tickables; }
         }
 
-        public IEnumerable<IFixedTickable> FixedTickables
+        public IReadOnlyList<IFixedTickable> FixedTickables
         {
             get { return fixedTickables; }
         }
 
-        public IEnumerable<ILateTickable> LateTickables
+        public IReadOnlyList<ILateTickable> LateTickables
         {
             get { return lateTickables; }
         }
 
-        public IEnumerable<IDisposable> Disposables
+        public IReadOnlyList<IDisposable> Disposables
         {
             get { return disposables; }
         }

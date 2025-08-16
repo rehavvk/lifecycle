@@ -20,35 +20,39 @@ namespace Rehawk.Lifecycle
         private void Update()
         {
             HandleInitializables();
-            
-            foreach (ITickable tickable in register.Tickables)
+
+            for (int i = 0; i < register.Tickables.Count; i++)
             {
+                ITickable tickable = register.Tickables[i];
                 tickable.Tick();
-            }   
+            }
         }
 
         private void FixedUpdate()
         {
-            foreach (IFixedTickable fixedTickable in register.FixedTickables)
+            for (int i = 0; i < register.FixedTickables.Count; i++)
             {
+                IFixedTickable fixedTickable = register.FixedTickables[i];
                 fixedTickable.FixedTick();
-            } 
+            }
         }
 
         private void LateUpdate()
         {
-            foreach (ILateTickable lateTickable in register.LateTickables)
+            for (int i = 0; i < register.LateTickables.Count; i++)
             {
+                ILateTickable lateTickable = register.LateTickables[i];
                 lateTickable.LateTick();
-            } 
+            }
         }
 
         private void OnApplicationQuit()
         {
-            foreach (IDisposable disposable in register.Disposables)
+            for (int i = 0; i < register.Disposables.Count; i++)
             {
+                IDisposable disposable = register.Disposables[i];
                 disposable.Dispose();
-            }  
+            }
         }
 
         private void HandleInitializables()
